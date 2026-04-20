@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "VidQuery AI",
+  "version": "1.0",
+  "description": "Queries your local LangChain RAG backend to talk to the video you are watching.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "http://127.0.0.1:8000/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "css": ["styles.css"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
