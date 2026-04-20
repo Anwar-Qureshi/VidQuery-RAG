@@ -124,7 +124,7 @@ async function handleProcessClick() {
         console.warn("Browser extraction failed, falling back to python", err);
     }
 
-    const response = await fetch("https://vidquery-api.onrender.com", {
+    const response = await fetch("https://vidquery-api.onrender.com/api/process", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
@@ -176,7 +176,7 @@ function setupInteractions() {
     chatArea.scrollTop = chatArea.scrollHeight;
 
     try {
-      const response = await fetch("https://vidquery-api.onrender.com", {
+      const response = await fetch("https://vidquery-api.onrender.com/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ video_id: currentVideoId, question: q })

@@ -43,9 +43,19 @@ app.add_middleware(
 vector_stores = {}
 
 # Initialize embeddings (HuggingFace) and LLM (Groq) once at startup to save time.
-# all-MiniLM-L6-v2 is a very fast, free, open-source embedding model.
+hf_token = os.getenv("HF_TOKEN")
+if hf_token:
+    print("Using Free Cloud Inference API for Embeddings (Low RAM Mode)")
+    from langchain_huggingface import HuggingFaceEndpointEmbeddings
+    embeddings = HuggingFaceEndpointEmbeddings(
+        model="sentence-transformers/all-MiniLM-L6-v2",
+        huggingfacehub_api_token=hf_token
+    )
+else:
+    print("Using Local PyTorch Embeddings (Requires >1GB RAM)")
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+
 # llama-3.1-8b-instant is Meta's incredible open-source AI hosted by Groq.
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 llm = ChatGroq(model_name="llama-3.1-8b-instant", temperature=0.2)
 
 
